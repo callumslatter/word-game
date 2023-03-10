@@ -11,16 +11,16 @@ const answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
-  const [guess, setGuess] = React.useState("");
   const [guessHistory, setGuessHistory] = React.useState([]);
 
-  function onGuessSubmission() {
+  function onGuessSubmission(tentativeGuess) {
+    console.log(tentativeGuess);
     const nextGuessHistory = [...guessHistory];
     nextGuessHistory.push({
       id: crypto.randomUUID(),
-      guess: guess,
+      guess: tentativeGuess,
     });
-    console.log(nextGuessHistory)
+    console.log(nextGuessHistory);
     setGuessHistory(nextGuessHistory);
   }
 
@@ -31,11 +31,7 @@ function Game() {
         setGuessHistory={setGuessHistory}
       />
 
-      <GuessInput
-        guess={guess}
-        setGuess={setGuess}
-        onGuessSubmission={() => onGuessSubmission()}
-      />
+      <GuessInput onGuessSubmission={onGuessSubmission} />
     </>
   );
 }
