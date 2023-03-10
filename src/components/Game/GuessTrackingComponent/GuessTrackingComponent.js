@@ -3,11 +3,11 @@ import React from "react";
 function GuessTrackingComponent({ guessHistory, setGuessHistory }) {
   return (
     <>
-      <ul>
-        {guessHistory.map(({id, guess}) => (
-          <li key={id}>{guess}</li>
+    <div className="guess-results">
+    {guessHistory.map(({id, value}) => (
+          <span className="guess" key={id}>{value}</span>
         ))}
-      </ul>
+    </div>
     </>
   );
 }

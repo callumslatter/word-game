@@ -3,13 +3,13 @@ import React from "react";
 // Improvements
 // - Improve guess length validation
 
-function GuessInput({ guess, setGuess, onGuessSubmission }) {
+function GuessInput({ onGuessSubmission }) {
+  const [tentativeGuess, setTentativeGuess] = React.useState("");
+
   function handleSubmit(event) {
     event.preventDefault();
-
-    console.log({ guess });
-    onGuessSubmission();
-    setGuess("");
+    onGuessSubmission(tentativeGuess);
+    setTentativeGuess("");
   }
 
   return (
@@ -19,13 +19,13 @@ function GuessInput({ guess, setGuess, onGuessSubmission }) {
         required
         id="guess-input"
         type="text"
-        value={guess}
+        value={tentativeGuess}
         maxLength={"5"}
         pattern="[a-zA-Z]{5}"
         title="5 letter word"
         onChange={(event) => {
-          const nextGuess = event.target.value.toUpperCase();
-          setGuess(nextGuess);
+          const nextTentativeGuess = event.target.value.toUpperCase();
+          setTentativeGuess(nextTentativeGuess);
         }}
       />
     </form>
