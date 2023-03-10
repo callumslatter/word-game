@@ -12,18 +12,30 @@ console.info({ answer });
 
 function Game() {
   const [guess, setGuess] = React.useState("");
-  const [guessHistory, setGuessHistory] = React.useState(["This is the first guess"])
+  const [guessHistory, setGuessHistory] = React.useState([]);
 
   function onGuessSubmission() {
-    const nextGuessHistory = [...guessHistory]
-    nextGuessHistory.push(guess)
-    setGuessHistory(nextGuessHistory)
+    const nextGuessHistory = [...guessHistory];
+    nextGuessHistory.push({
+      id: crypto.randomUUID(),
+      guess: guess,
+    });
+    console.log(nextGuessHistory)
+    setGuessHistory(nextGuessHistory);
   }
 
   return (
     <>
-      <GuessInput guess={guess} setGuess={setGuess} onGuessSubmission={() => onGuessSubmission()} />
-      <GuessTrackingComponent guessHistory={guessHistory} setGuessHistory={setGuessHistory}/>
+      <GuessTrackingComponent
+        guessHistory={guessHistory}
+        setGuessHistory={setGuessHistory}
+      />
+
+      <GuessInput
+        guess={guess}
+        setGuess={setGuess}
+        onGuessSubmission={() => onGuessSubmission()}
+      />
     </>
   );
 }
