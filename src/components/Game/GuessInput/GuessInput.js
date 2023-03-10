@@ -3,11 +3,12 @@ import React from "react";
 // Improvements
 // - Improve guess length validation
 
-function GuessInput({ guess, setGuess }) {
+function GuessInput({ guess, setGuess, onGuessSubmission }) {
   function handleSubmit(event) {
     event.preventDefault();
 
     console.log({ guess });
+    onGuessSubmission();
     setGuess("");
   }
 
