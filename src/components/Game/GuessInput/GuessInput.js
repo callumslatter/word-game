@@ -8,7 +8,6 @@ function GuessInput({ onGuessSubmission }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(tentativeGuess);
     const randomString = "here is a  random string";
     onGuessSubmission(tentativeGuess);
     setTentativeGuess("");

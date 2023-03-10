@@ -14,13 +14,11 @@ function Game() {
   const [guessHistory, setGuessHistory] = React.useState([]);
 
   function onGuessSubmission(tentativeGuess) {
-    console.log(tentativeGuess);
     const nextGuessHistory = [...guessHistory];
     nextGuessHistory.push({
       id: crypto.randomUUID(),
       guess: tentativeGuess,
     });
-    console.log(nextGuessHistory);
     setGuessHistory(nextGuessHistory);
   }
 
