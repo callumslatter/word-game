@@ -4,8 +4,8 @@ function GuessTrackingComponent({ guessHistory, setGuessHistory }) {
   return (
     <>
     <div className="guess-results">
-    {guessHistory.map(({id, guess}) => (
-          <span className="guess" key={id}>{guess}</span>
+    {guessHistory.map(({id, value}) => (
+          <span className="guess" key={id}>{value}</span>
         ))}
     </div>
     </>

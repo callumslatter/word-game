@@ -17,7 +17,7 @@ function Game() {
     const nextGuessHistory = [...guessHistory];
     nextGuessHistory.push({
       id: crypto.randomUUID(),
-      guess: tentativeGuess,
+      value: tentativeGuess,
     });
     setGuessHistory(nextGuessHistory);
   }
