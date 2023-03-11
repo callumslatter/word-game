@@ -16,22 +16,17 @@ function Game() {
 
   function onGuessSubmission(tentativeGuess) {
     if (guessHistory.length >= NUM_OF_GUESSES_ALLOWED) {
-      window.alert("You can only guess 6 times!")
-      return
+      window.alert("You can only guess 6 times!");
+      return;
     }
     const nextGuessHistory = [...guessHistory];
-    nextGuessHistory.push(
-      tentativeGuess,
-    );
+    nextGuessHistory.push(tentativeGuess);
     setGuessHistory(nextGuessHistory);
   }
 
   return (
     <>
-      <GuessTrackingComponent
-        guessHistory={guessHistory}
-      />
-
+      <GuessTrackingComponent guessHistory={guessHistory} answer={answer} />
       <GuessInput onGuessSubmission={onGuessSubmission} />
     </>
   );
