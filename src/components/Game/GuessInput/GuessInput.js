@@ -12,14 +12,12 @@ function GuessInput({ onGuessSubmission, gameStatus }) {
     setTentativeGuess("");
   }
 
-  const inputStatus = (gameStatus === "ongoing" ? false : true)
-
   return (
     <form className="guess-input-wrapper" onSubmit={handleSubmit}>
       <label htmlFor="guess-input">Enter guess:</label>
       <input
         required
-        disabled={inputStatus}
+        disabled={gameStatus !== "ongoing"}
         id="guess-input"
         type="text"
         value={tentativeGuess}

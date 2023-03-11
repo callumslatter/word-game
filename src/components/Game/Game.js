@@ -4,8 +4,10 @@ import { sample } from "../../utils";
 import { WORDS } from "../../data";
 import GuessInput from "./GuessInput/GuessInput";
 import GuessTrackingComponent from "./GuessTrackingComponent/GuessTrackingComponent";
-import GameOverBanner from "../GameOverBanner/GameOverBanner";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
+
+import WonBanner from "../WonBanner/WonBanner";
+import LostBanner from "../LostBanner/LostBanner";
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -17,13 +19,18 @@ function Game() {
   const [gameStatus, setGameStatus] = React.useState("ongoing");
 
   function onGuessSubmission(tentativeGuess) {
-    const nextGuessHistory = [...guessHistory];
-    nextGuessHistory.push(tentativeGuess);
+
+    // Add guess to list 
+    const nextGuessHistory = [...guessHistory, tentativeGuess];
     setGuessHistory(nextGuessHistory);
-    if (tentativeGuess === answer) {
+
+    // If game won
+    if (tentativeGuess.toUpperCase() === answer) {
       setGameStatus("won");
     }
-    if (nextGuessHistory.length === NUM_OF_GUESSES_ALLOWED) {
+
+    // If game lost
+    if (nextGuessHistory.length >= NUM_OF_GUESSES_ALLOWED) {
       setGameStatus("lost");
     }
   }
@@ -35,13 +42,15 @@ function Game() {
         onGuessSubmission={onGuessSubmission}
         gameStatus={gameStatus}
       />
-      {gameStatus !== "ongoing" ? (
-        <GameOverBanner
-          gameStatus={gameStatus}
-          answer={answer}
-          guessHistory={guessHistory}
-        ></GameOverBanner>
-      ) : undefined}
+
+      {/* End of game banners */}
+      
+      {gameStatus === "won" && (
+        <WonBanner numOfGuesses={guessHistory.length}/>
+      )}
+      {gameStatus === "lost" && (
+        <LostBanner answer={answer}/>
+      )}
     </>
   );
 }
