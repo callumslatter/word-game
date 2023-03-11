@@ -6,6 +6,9 @@ import GuessInput from "./GuessInput/GuessInput";
 import GuessTrackingComponent from "./GuessTrackingComponent/GuessTrackingComponent";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 
+import WonBanner from "../WonBanner/WonBanner";
+import LostBanner from "../LostBanner/LostBanner";
+
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
 // To make debugging easier, we'll log the solution in the console.
@@ -13,21 +16,41 @@ console.info({ answer });
 
 function Game() {
   const [guessHistory, setGuessHistory] = React.useState([]);
+  const [gameStatus, setGameStatus] = React.useState("ongoing");
 
   function onGuessSubmission(tentativeGuess) {
-    if (guessHistory.length >= NUM_OF_GUESSES_ALLOWED) {
-      window.alert("You can only guess 6 times!");
-      return;
-    }
-    const nextGuessHistory = [...guessHistory];
-    nextGuessHistory.push(tentativeGuess);
+
+    // Add guess to list 
+    const nextGuessHistory = [...guessHistory, tentativeGuess];
     setGuessHistory(nextGuessHistory);
+
+    // If game won
+    if (tentativeGuess.toUpperCase() === answer) {
+      setGameStatus("won");
+    }
+
+    // If game lost
+    if (nextGuessHistory.length >= NUM_OF_GUESSES_ALLOWED) {
+      setGameStatus("lost");
+    }
   }
 
   return (
     <>
       <GuessTrackingComponent guessHistory={guessHistory} answer={answer} />
-      <GuessInput onGuessSubmission={onGuessSubmission} />
+      <GuessInput
+        onGuessSubmission={onGuessSubmission}
+        gameStatus={gameStatus}
+      />
+
+      {/* End of game banners */}
+      
+      {gameStatus === "won" && (
+        <WonBanner numOfGuesses={guessHistory.length}/>
+      )}
+      {gameStatus === "lost" && (
+        <LostBanner answer={answer}/>
+      )}
     </>
   );
 }
