@@ -17,24 +17,30 @@ function Game() {
   const [gameStatus, setGameStatus] = React.useState("ongoing");
 
   function onGuessSubmission(tentativeGuess) {
-    if (guessHistory.length >= NUM_OF_GUESSES_ALLOWED) {
-      window.alert("You can only guess 6 times!");
-      return;
-    }
     const nextGuessHistory = [...guessHistory];
     nextGuessHistory.push(tentativeGuess);
     setGuessHistory(nextGuessHistory);
     if (tentativeGuess === answer) {
-      setGameStatus("won")
+      setGameStatus("won");
+    }
+    if (nextGuessHistory.length === NUM_OF_GUESSES_ALLOWED) {
+      setGameStatus("lost");
     }
   }
 
   return (
     <>
       <GuessTrackingComponent guessHistory={guessHistory} answer={answer} />
-      <GuessInput onGuessSubmission={onGuessSubmission} />
-      {(gameStatus === "won" | "lost") ? (
-        <GameOverBanner gameStatus={gameStatus} answer={answer} guessHistory={guessHistory}></GameOverBanner>
+      <GuessInput
+        onGuessSubmission={onGuessSubmission}
+        gameStatus={gameStatus}
+      />
+      {gameStatus !== "ongoing" ? (
+        <GameOverBanner
+          gameStatus={gameStatus}
+          answer={answer}
+          guessHistory={guessHistory}
+        ></GameOverBanner>
       ) : undefined}
     </>
   );
