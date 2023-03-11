@@ -4,6 +4,7 @@ import { sample } from "../../utils";
 import { WORDS } from "../../data";
 import GuessInput from "./GuessInput/GuessInput";
 import GuessTrackingComponent from "./GuessTrackingComponent/GuessTrackingComponent";
+import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -14,11 +15,14 @@ function Game() {
   const [guessHistory, setGuessHistory] = React.useState([]);
 
   function onGuessSubmission(tentativeGuess) {
+    if (guessHistory.length >= NUM_OF_GUESSES_ALLOWED) {
+      window.alert("You can only guess 6 times!")
+      return
+    }
     const nextGuessHistory = [...guessHistory];
-    nextGuessHistory.push({
-      id: crypto.randomUUID(),
-      value: tentativeGuess,
-    });
+    nextGuessHistory.push(
+      tentativeGuess,
+    );
     setGuessHistory(nextGuessHistory);
   }
 
@@ -26,7 +30,6 @@ function Game() {
     <>
       <GuessTrackingComponent
         guessHistory={guessHistory}
-        setGuessHistory={setGuessHistory}
       />
 
       <GuessInput onGuessSubmission={onGuessSubmission} />

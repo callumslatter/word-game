@@ -1,24 +1,18 @@
 import React from "react";
 import Guess from "../../Guess/Guess";
+import { NUM_OF_GUESSES_ALLOWED } from "../../../constants";
 
 import { range } from "../../../utils";
 
-function GuessTrackingComponent({ guessHistory, setGuessHistory }) {
-  const guessesAllowed = 6;
-  const guessesAllowedArray = range(0, guessesAllowed);
-
+function GuessTrackingComponent({ guessHistory }) {
   return (
     <>
       <div className="guess-results">
-        {guessesAllowedArray.map(cell => {
-          return <Guess></Guess>;
-        })}
-
-        {guessHistory.map(({ id, value }) => (
-          <span className="guess" key={id}>
-            {value}
-          </span>
-        ))}
+        <div>
+          {range(NUM_OF_GUESSES_ALLOWED).map((num) => (
+            <Guess className="guess" key={num} value={guessHistory[num]}></Guess>
+          ))}
+        </div>
       </div>
     </>
   );
